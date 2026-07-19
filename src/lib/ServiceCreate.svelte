@@ -26,13 +26,8 @@
     const { ng, session } = await ngSession
     working = true
     try {
-      /* TODO: drop the fallback once the SDK implements services: */
-      if (ng.admin_plugin_service_register) {
-        await ng.admin_plugin_service_register(
-          session.session_id, name.trim(), ip.trim(), +port)
-      } else {
-        console.warn("The SDK has no admin_plugin_service_register yet, doing nothing!")
-      }
+      await ng.admin_plugin_service_register(
+        session.session_id, name.trim(), ip.trim(), +port)
       unfolded = false
       name = ip = port = ""
       /* Reset the services, so the list is fetched anew (will trigger the

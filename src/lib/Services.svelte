@@ -13,17 +13,7 @@
     console.warn("Fetching services!")
     const { ng, session } = await ngSession
     let svcs: Service[]
-    /* TODO: drop the mock once the SDK implements services: */
-    if (ng.admin_plugin_service_list) {
-      svcs = await ng.admin_plugin_service_list(session.session_id)
-    } else {
-      console.warn("The SDK has no admin_plugin_service_list yet, using a mock list!")
-      svcs = [
-        { name: "sparql", ip: "127.0.0.1", port: 1234, globally_enabled: true },
-        { name: "verifier", ip: "127.0.0.1", port: 1440, globally_enabled: true },
-        { name: "webdav", ip: "127.0.0.1", port: 8080, globally_enabled: false },
-      ]
-    }
+    svcs = await ng.admin_plugin_service_list(session.session_id)
     svcs.sort((x, y) => x.name.localeCompare(y.name))
     services = svcs; // triggers parent
     return svcs // display our thing

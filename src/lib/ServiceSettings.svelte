@@ -30,13 +30,8 @@
     working = true
     try {
       const service = $state.snapshot(services[selected_service])
-      /* TODO: drop the fallback once the SDK implements services: */
-      if (ng.admin_plugin_service_update) {
-        await ng.admin_plugin_service_update(
-          session.session_id, service.name, ip, +port, enabled)
-      } else {
-        console.warn("The SDK has no admin_plugin_service_update yet, only updating locally!")
-      }
+      await ng.admin_plugin_service_update(
+        session.session_id, service.name, ip, +port, enabled)
       // Will trigger the parent:
       services[selected_service].ip = ip
       services[selected_service].port = +port
