@@ -23,6 +23,7 @@ export function pubKey(s: string): PubKey {
 export type UsageStats = {
   net: { ingress: number, egress: number },
   storage: { current: number, max: number },
+  first_seen: number,
   last_seen: number,
 }
 

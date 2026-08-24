@@ -96,10 +96,16 @@
         </div>
       </div>
 
-      <!-- Last seen -->
-      <div class="flex items-center justify-between rounded-lg bg-base-200 p-3">
-        <span class="text-xs uppercase tracking-wide text-base-content/50">Last seen</span>
-        <span class="text-sm font-medium">{formatTimestamp(stats.last_seen)}</span>
+      <!-- First/Last seen -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="rounded-lg bg-base-200 p-3">
+          <div class="text-xs text-base-content/60">First seen</div>
+          <div class="text-sm font-medium">{formatTimestamp(stats.first_seen)}</div>
+        </div>
+        <div class="rounded-lg bg-base-200 p-3">
+          <div class="text-xs text-base-content/60">Last seen</div>
+          <div class="text-sm font-medium">{formatTimestamp(stats.last_seen)}</div>
+        </div>
       </div>
     </div>
   {:else}
