@@ -5,13 +5,10 @@
 -->
 <script lang="ts">
   import { ngSession } from '@ng-org/orm'
-  import { type PubKey, type RemoteUser } from '../tools'
+  import { listedUserId, type ListedUser, type PubKey, type RemoteUser }
+    from '../tools'
 
   let { remote_users = $bindable() } = $props()
-
-  /* admin_list_users returns a vector of ListedUser which, as long as we do not
-   * ask for hydrated users, is merely `Id(the_pubkey)`: */
-  type ListedUser = { Id: PubKey }
 
   async function fetch_users() {
     console.warn("Fetching users!")
@@ -25,7 +22,7 @@
         false,  /* hydrated */
         undefined,  /* after_user: start from the first one */
         undefined)  /* limit: no limit */
-      return listed.map((u) => u.Id)
+      return listed.map(listedUserId)
     }
     const admins = await list_users(true)
     const noadmins = await list_users(false)
