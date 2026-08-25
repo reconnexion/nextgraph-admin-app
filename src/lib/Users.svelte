@@ -5,20 +5,34 @@
 -->
 <script lang="ts">
   import { ngSession } from '@ng-org/orm'
-  import { type RemoteUser } from '../tools'
+  import { type PubKey, type RemoteUser } from '../tools'
 
   let { remote_users = $bindable() } = $props()
+
+  /* admin_list_users returns a vector of ListedUser which, as long as we do not
+   * ask for hydrated users, is merely `Id(the_pubkey)`: */
+  type ListedUser = { Id: PubKey }
 
   async function fetch_users() {
     console.warn("Fetching users!")
     const { ng, session } = await ngSession;
     console.log("session: ", session)
-    const admins = await ng.admin_list_users(session.session_id, true)
-    const noadmins = await ng.admin_list_users(session.session_id, false)
+    /* Fetch the pubkeys of either all the admins or all the non admins: */
+    const list_users = async (admins: boolean): Promise<PubKey[]> => {
+      const listed: ListedUser[] = await ng.admin_list_users(
+        session.session_id,
+        admins,
+        false,  /* hydrated */
+        undefined,  /* after_user: start from the first one */
+        undefined)  /* limit: no limit */
+      return listed.map((u) => u.Id)
+    }
+    const admins = await list_users(true)
+    const noadmins = await list_users(false)
     console.warn("Got admins: ", admins, " and non admins: ", noadmins)
     const users: RemoteUser[] = await Promise.all([
-      ...admins.map((key: object) => ({ key, is_admin: true })),
-      ...noadmins.map((key: object) => ({ key, is_admin: false })),
+      ...admins.map((key: PubKey) => ({ key, is_admin: true })),
+      ...noadmins.map((key: PubKey) => ({ key, is_admin: false })),
     ].map(async (u) => {
       const name = await ng.pubkey_to_string(u.key)
       return {
