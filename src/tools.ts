@@ -67,9 +67,11 @@ export type RemoteUser = {
   is_me: boolean,  // is this the currently logged in user?
 }
 
+// Whether the service has been enabled or denied already:
+export type PluginStatus = "Waiting" | "Enabled" | "Denied"
+
 export type Service = {
   name: string, // the name of the service
-  ip: string, // the IP address of the service
-  port: number, // the port number of the service
-  globally_enabled: boolean,  // Whether the service is enabled on this broker
+  peer_id: string, // the peer-id the service used when registering
+  status: PluginStatus,
 }

@@ -22,17 +22,13 @@ and call admin functions of the SDK to display users usage statistics.
   import UserStats from './lib/UserStats.svelte'
   import UserSettings from './lib/UserSettings.svelte'
   import Services from './lib/Services.svelte'
-  import ServiceSelect from './lib/ServiceSelect.svelte'
-  import ServiceSettings from './lib/ServiceSettings.svelte'
-  import ServiceCreate from './lib/ServiceCreate.svelte'
+  import ServiceList from './lib/ServiceList.svelte'
 
   let remote_users: RemoteUser[] | null = $state(null)
   /* The selected remote user whose stats we want to display: */
   let selected_user: number | null = $state(null)
 
   let services: Service[] | null = $state(null)
-  /* The selected service to edit: */
-  let selected_service: number | null = $state(null)
 
   /* Which tab is displayed: */
   let current_tab: 'users' | 'apps' = $state('users')
@@ -45,7 +41,6 @@ and call admin functions of the SDK to display users usage statistics.
     remote_users = null
     selected_user = null
     services = null
-    selected_service = null
   }
 </script>
 
@@ -148,35 +143,10 @@ and call admin functions of the SDK to display users usage statistics.
         <li class="card bg-base-100 shadow-md">
           <div class="card-body gap-4">
             <div class="flex items-center gap-3">
-              <h2 class="card-title grow">Select a service</h2>
-              {#if selected_service !== null}
-                <span class="badge badge-success gap-1">✓ done</span>
-              {/if}
+              <h2 class="card-title grow">Services</h2>
             </div>
-            <p class="text-sm text-base-content/70">Select a service to display or modify its settings:</p>
-            <ServiceSelect {services} bind:selected_service={selected_service} />
-          </div>
-        </li>
-      {/if}
-
-      {#if services !== null}
-        <li class="card bg-base-100 shadow-md">
-          <div class="card-body gap-4">
-            <div class="flex items-center gap-3">
-              <h2 class="card-title grow">Create a service</h2>
-            </div>
-            <ServiceCreate bind:services={services} bind:selected_service={selected_service} />
-          </div>
-        </li>
-      {/if}
-
-      {#if services !== null && selected_service !== null}
-        <li class="card bg-base-100 shadow-md">
-          <div class="card-body gap-4">
-            <div class="flex items-center gap-3">
-              <h2 class="card-title grow">Service Settings</h2>
-            </div>
-            <ServiceSettings bind:services={services} bind:selected_service={selected_service} />
+            <p class="text-sm text-base-content/70">Enable or deny the services waiting for a decision:</p>
+            <ServiceList bind:services={services} />
           </div>
         </li>
       {/if}
