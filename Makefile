@@ -12,7 +12,7 @@ clean:
 
 pnpm-lock.yaml: package.json
 	pnpm install &&\
-	date > $@
+	touch $@
 
 # FIXME: too much noise therefore "|| true"
 type_check.ok: \

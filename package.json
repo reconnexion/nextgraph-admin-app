@@ -13,9 +13,9 @@
   "dependencies": {
     "daisyui": "^5.5.23",
     "tailwindcss": "^4.3.1",
-    "@ng-org/web": "link:../nextgraph-devstack/nextgraph-rs/sdk/js/web",
-    "@ng-org/orm": "link:../nextgraph-devstack/nextgraph-rs/sdk/js/orm",
-    "@ng-org/alien-deepsignals": "link:../nextgraph-devstack/nextgraph-rs/sdk/js/alien-deepsignals"
+    "@ng-org/web": "link:../nextgraph-rs/sdk/js/web",
+    "@ng-org/orm": "link:../nextgraph-rs/sdk/js/orm",
+    "@ng-org/alien-deepsignals": "link:../nextgraph-rs/sdk/js/alien-deepsignals"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
