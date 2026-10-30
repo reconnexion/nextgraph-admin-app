@@ -8,7 +8,7 @@ endif
 all: dist/index.html
 
 clean:
-	echo TODO
+	@echo TODO
 
 pnpm-lock.yaml: package.json
 	pnpm install &&\
